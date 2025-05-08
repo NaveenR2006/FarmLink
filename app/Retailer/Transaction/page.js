@@ -26,10 +26,13 @@ const TABLE_HEAD = ["Order ID", "Product Name", "Date", "Quantity (Kg)", "Amount
 
 const Page = () => {
     const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     useEffect(() => {
         fetch('https://x8ki-letl-twmt.n7.xano.io/api:eaXUv0bD/farmer_transaction')
             .then((res) => res.json())
-            .then((data) => { setTransactions(data.result); });
+            .then((data) => { setTransactions(data.result || []); setLoading(false); })
+            .catch((err) => { setError('Failed to load transactions'); setLoading(false); });
     }, [])
     console.log(transactions)
 
@@ -59,6 +62,13 @@ const Page = () => {
                 </div>
             </CardHeader>
             <CardBody className=" px-2 border rounded-xl">
+                {loading ? (
+                    <Typography color="gray" className="text-center py-8">Loading...</Typography>
+                ) : error ? (
+                    <Typography color="red" className="text-center py-8">{error}</Typography>
+                ) : transactions.length === 0 ? (
+                    <Typography color="gray" className="text-center py-8">No transactions found.</Typography>
+                ) : (
                 <table className="w-full min-w-max table-auto text-left">
                     <thead>
                         <tr>
@@ -79,17 +89,22 @@ const Page = () => {
                         </tr>
                     </thead>
                     {transactions.map((transaction) => {
+                        const productName = transaction?._products?.Name || 'N/A';
+                        const date = transaction?._order?.Date || 'N/A';
+                        const quantity = transaction?._order?.Quantity || 'N/A';
+                        const amount = transaction?._order?.Amount || 'N/A';
                         return (
                             <TransactionsTable
                                 key={transaction?.id}
                                 orderId={transaction?.id}
-                                productName={transaction._products?.Name}
-                                date={transaction?._order.Date}
-                                quantity={transaction?._order.Quantity}
-                                amount={transaction?._order.Amount}
+                                productName={productName}
+                                date={date}
+                                quantity={quantity}
+                                amount={amount}
                             />)
                     })}
                 </table>
+                )}
             </CardBody>
             <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
                 <Button variant="outlined" size="sm">
@@ -127,4 +142,3 @@ const Page = () => {
 }
 
 export default Page
-

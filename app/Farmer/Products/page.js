@@ -1,9 +1,8 @@
 'use client'
-import { CardDefault } from '@/components/CardDefault'
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { Button } from "@material-tailwind/react";
-// Remove the import statement for CardDefault
+import { CardDefault } from '@/components/CardDefault'
 const Page = () => {
 
     const [products, setProducts] = useState([]);
@@ -19,6 +18,7 @@ const Page = () => {
     return (
         <>
             <div className='flex justify-end m-1 p-2'>
+                {/* Cart button removed, navigation now only in navbar */}
                 <Button color='green' className='p-3 text-sm rounded-full'><a href='../../Insertion'>Add Product</a></Button>
             </div>
             <div className='grid lg:grid-cols-3 gap-10 p-10 ml-10'>

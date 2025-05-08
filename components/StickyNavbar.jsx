@@ -32,9 +32,8 @@ export function StickyNavbar({ path }) {
                             <a href={`/${path}/Products`} className="flex text-4xl hover:underline pr-20 items-center">
                                 Products
                             </a>
-
-                            <a href={`../${path}/Transaction`} className="flex text-4xl hover:underline pl-20 items-center">
-                                Transactions
+                            <a href="/Carts" className="flex text-4xl hover:underline pl-20 items-center">
+                                🛒 Cart
                             </a>
                         </ul>
                     </div>
