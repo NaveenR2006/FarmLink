@@ -45,3 +45,4 @@ node_modules/
 
 # Ignore specific file
 secret-config.json
+node_modules/
